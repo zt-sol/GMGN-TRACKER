@@ -1,0 +1,28 @@
+{
+  "manifest_version": 3,
+  "name": "GMGN 访问追踪",
+  "version": "1.2.0",
+  "description": "自动记录你在 GMGN/Padre/Debot 上看过的代币 (X: Crawford886)",
+  "permissions": ["storage"],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "访问追踪",
+    "default_icon": "icon.png"
+  },
+  "icons": {
+    "128": "icon.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://gmgn.ai/*", "*://trade.padre.gg/*", "*://debot.ai/*"],
+      "js": ["main-hook.js"],
+      "run_at": "document_start",
+      "world": "MAIN"
+    },
+    {
+      "matches": ["*://gmgn.ai/*", "*://trade.padre.gg/*", "*://debot.ai/*"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}

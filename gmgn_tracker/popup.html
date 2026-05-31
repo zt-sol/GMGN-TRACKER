@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      width: 520px;
+      max-height: 600px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-size: 13px;
+      color: #e0e0e0;
+      background: #1a1b1e;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      background: #222428;
+      border-bottom: 1px solid #333;
+      flex-shrink: 0;
+    }
+    .header h1 {
+      font-size: 14px;
+      font-weight: 600;
+      flex: 1;
+    }
+    .header .x-link {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 10px 3px 7px;
+      border-radius: 8px;
+      background: #1d1f23;
+      border: 1px solid #333;
+      text-decoration: none;
+      flex-shrink: 0;
+      transition: all 0.15s;
+      cursor: pointer;
+    }
+    .header .x-link:hover {
+      background: #2a2d33;
+      border-color: #555;
+    }
+    .header .x-link svg {
+      width: 15px;
+      height: 15px;
+      fill: #fff;
+      flex-shrink: 0;
+    }
+    .header .x-link .x-label {
+      font-size: 12px;
+      font-weight: 500;
+      color: #ccc;
+      line-height: 1;
+    }
+    .header .x-link:hover .x-label {
+      color: #fff;
+    }
+    .header .count {
+      font-size: 11px;
+      color: #888;
+      background: #333;
+      padding: 2px 8px;
+      border-radius: 10px;
+    }
+    .toolbar {
+      display: flex;
+      gap: 6px;
+      padding: 8px 14px;
+      border-bottom: 1px solid #333;
+      flex-shrink: 0;
+      flex-wrap: wrap;
+    }
+    .toolbar input {
+      flex: 1;
+      min-width: 120px;
+      padding: 6px 10px;
+      border: 1px solid #444;
+      border-radius: 6px;
+      background: #2a2b2f;
+      color: #e0e0e0;
+      font-size: 12px;
+      outline: none;
+    }
+    .toolbar input:focus { border-color: #5b9aff; }
+    .toolbar input::placeholder { color: #666; }
+    .btn {
+      padding: 6px 10px;
+      border: none;
+      border-radius: 6px;
+      font-size: 11px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .btn:active { transform: scale(0.96); }
+    .btn-export { background: #2d7a3a; color: #fff; }
+    .btn-export:hover { background: #358c45; }
+    .btn-clear { background: #5a2020; color: #ddd; }
+    .btn-clear:hover { background: #7a2a2a; }
+
+    .chain-filter {
+      display: flex;
+      gap: 4px;
+      padding: 4px 14px;
+      border-bottom: 1px solid #333;
+      flex-shrink: 0;
+      flex-wrap: wrap;
+    }
+    .chain-filter .filter-btn {
+      padding: 2px 9px;
+      border-radius: 10px;
+      font-size: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      background: #2a2b2f;
+      color: #888;
+      transition: all 0.15s;
+      user-select: none;
+    }
+    .chain-filter .filter-btn:hover { background: #333; color: #ccc; }
+    .chain-filter .filter-btn.active { background: #5b9aff30; color: #5b9aff; }
+
+    .status-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 14px;
+      font-size: 10px;
+      color: #666;
+      border-bottom: 1px solid #2a2a2a;
+      flex-shrink: 0;
+      min-height: 24px;
+    }
+
+    .token-list {
+      flex: 1;
+      overflow-y: auto;
+    }
+    .token-list::-webkit-scrollbar { width: 5px; }
+    .token-list::-webkit-scrollbar-track { background: transparent; }
+    .token-list::-webkit-scrollbar-thumb { background: #444; border-radius: 3px; }
+    .token-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 14px;
+      border-bottom: 1px solid #2a2a2a;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .token-item:hover { background: #2a2b30; }
+    .token-item .info {
+      flex: 1;
+      min-width: 0;
+    }
+    .token-item .name {
+      font-weight: 600;
+      font-size: 12px;
+      color: #fff;
+    }
+    .token-item .chain-tag {
+      font-size: 9px;
+      padding: 1px 5px;
+      border-radius: 3px;
+      font-weight: 600;
+      text-transform: uppercase;
+      flex-shrink: 0;
+    }
+    .token-item .platform-tag {
+      font-size: 8px;
+      padding: 1px 4px;
+      border-radius: 2px;
+      background: #333;
+      color: #999;
+      flex-shrink: 0;
+    }
+    .chain-sol { background: #9945FF15; color: #9945FF; }
+    .chain-eth { background: #627EEA15; color: #627EEA; }
+    .chain-bsc { background: #F0B90B15; color: #F0B90B; }
+    .chain-base { background: #0052FF15; color: #0052FF; }
+    .chain-blast { background: #FCFC0315; color: #FCFC03; }
+    .chain-tron { background: #FF060A15; color: #FF060A; }
+    .chain-unknown { background: #88888815; color: #888; }
+    .token-item .delete-btn {
+      opacity: 0;
+      background: none;
+      border: none;
+      color: #666;
+      cursor: pointer;
+      font-size: 14px;
+      padding: 2px 4px;
+      transition: color 0.15s;
+    }
+    .token-item:hover .delete-btn { opacity: 1; }
+    .token-item .delete-btn:hover { color: #ff4757; }
+    .empty-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 50px 20px;
+      color: #555;
+      text-align: center;
+    }
+    .empty-state .emoji { font-size: 36px; margin-bottom: 10px; }
+    .empty-state p { font-size: 12px; line-height: 1.6; }
+    .footer {
+      padding: 6px 14px;
+      border-top: 1px solid #333;
+      font-size: 10px;
+      color: #555;
+      text-align: center;
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>📜 GMGN 访问追踪</h1>
+    <a class="x-link" href="https://x.com/Crawford886" target="_blank" title="X: Crawford886">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+      </svg>
+      <span class="x-label">Crawford</span>
+    </a>
+    <span class="count" id="recordCount">0</span>
+  </div>
+  <div class="toolbar">
+    <input type="text" id="searchInput" placeholder="搜索代币名称或合约地址..." />
+    <button class="btn btn-export" id="exportBtn">📥 CSV</button>
+    <button class="btn btn-clear" id="clearBtn">🗑️</button>
+  </div>
+  <div class="chain-filter" id="chainFilter">
+    <span class="filter-btn active" data-chain="all">全部</span>
+    <span class="filter-btn" data-chain="sol">SOL</span>
+    <span class="filter-btn" data-chain="bsc">BSC</span>
+    <span class="filter-btn" data-chain="eth">ETH</span>
+    <span class="filter-btn" data-chain="base">Base</span>
+    <span class="filter-btn" data-chain="tron">TRON</span>
+  </div>
+  <div class="status-bar" id="statusBar">
+    <span id="statusText">就绪</span>
+  </div>
+  <div class="token-list" id="tokenList">
+    <div class="empty-state">
+      <div class="emoji">👀</div>
+      <p>还没有记录<br/>打开 GMGN / Padre / Debot 的代币详情页就会自动记录</p>
+    </div>
+  </div>
+  <div class="footer">点击代币复制合约 · 支持 GMGN / Padre / Debot</div>
+  <script src="popup.js"></script>
+</body>
+</html>
