@@ -1,4 +1,4 @@
-# 🕵️ GMGN 访问追踪 / GMGN Visit Tracker
+# GMGN 访问追踪 / GMGN  Tracker
 
 > 自动记录你在 **GMGN / Padre / Debot** 上看过的代币，按链筛选、导出 CSV。
 >
