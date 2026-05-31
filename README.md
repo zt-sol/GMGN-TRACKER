@@ -49,7 +49,7 @@
 
 ### 方法一：开发者模式加载（推荐）
 
-1. **克隆或下载** 本仓库到本地
+1. **克隆或下载** 本仓库到本地 ,在页面右上方点击绿色的 Code 按钮, Download ZIP
 2. 打开 Chrome → 地址栏输入 `chrome://extensions`
 3. 右上角开启 **"开发者模式 / Developer mode"**
 4. 点击 **"加载已解压的扩展程序 / Load unpacked"**
