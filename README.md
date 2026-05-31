@@ -4,7 +4,7 @@
 >
 > Auto-track tokens you've viewed on GMGN, Padre, and Debot. Chain filtering, CSV export.
 
-**作者 / Author:** [Crawford886 (X)](https://x.com/Crawford886)
+**作者 / Author:** [Crawford (X)](https://x.com/Crawford886)
 
 ---
 
